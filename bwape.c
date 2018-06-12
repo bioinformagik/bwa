@@ -379,7 +379,8 @@ int bwa_cal_pac_pos_pe(const bntseq_t *bns, const char *prefix, bwt_t *const _bw
 						bwt_multi1_t *q = p[j]->multi + k;
 						q->pos = bwa_sa2pos(bns, bwt, q->pos, p[j]->len + q->ref_shift, &strand);
 						q->strand = strand;
-						if (q->pos != p[j]->pos)
+						// fixed in version 1.7.13 (see https://github.com/lh3/bwa/commit/099c24f5fcef8c22f3f2f60603da7963d56ca24a)
+						if (q->pos != p[j]->pos && q->pos != (bwtint_t)-1)
 							p[j]->multi[n_multi++] = *q;
 					}
 					p[j]->n_multi = n_multi;
